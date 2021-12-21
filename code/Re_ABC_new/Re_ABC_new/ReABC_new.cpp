@@ -5,7 +5,7 @@
 
 vector<vector<double> > perform_simulation(vector<int> ChromosomeLengths, double a_param, double inv_rate, double trans_rate,
 	double fus_rate, double fis_rate, double dup_rate, double loss_rate, double root_a_param) {
-
+	
 }
 
 
