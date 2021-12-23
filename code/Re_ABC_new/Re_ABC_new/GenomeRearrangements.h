@@ -6,7 +6,7 @@
 #include "RandomGenerators.h"
 //#include "param_priors.h"
 //#include "GRABC_options.h" // should be changed to #include "ReABC_params.h"
-//#include "FastZip.h"
+#include "FastZip.h"
 #include <vector>
 //#include <algorithm>
 #include <iostream>

@@ -5,6 +5,14 @@
 
 vector<vector<double> > perform_simulation(vector<int> ChromosomeLengths, double a_param, double inv_rate, double trans_rate,
 	double fus_rate, double fis_rate, double dup_rate, double loss_rate, double root_a_param) {
+
+	Simulator sim(ChromosomeLengths, a_param, inv_rate, trans_rate, fus_rate,
+		fis_rate, dup_rate, loss_rate, root_a_param); // create simulation object
+
+	vector<genomeType> simulatedGenomes = sim.simulateBasedOnTree(Re_params::_inputTreeFileName);
+	// here I need to copy the event counter vectors from the sim object
+	vector<vector<int>> counters_vec = sim.get_event_counter_vectors(); // order of counter vectors is inv, trans, fis, fus
+	// what next? need to return it to the python
 	
 }
 

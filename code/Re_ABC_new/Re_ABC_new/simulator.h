@@ -7,7 +7,7 @@
 #include "GenomeRearrangements.h"
 #include "FastZip.h"
 #include "RandomGenerators.h"
-#include "GRABC_options.h"
+#include "ReABC_params.h"
 
 using namespace std;
 
@@ -25,6 +25,9 @@ class Simulator {
 		void test();
 
 		static int inv_counter, trans_counter, fis_counter, fus_counter; // 21.12.21 to count events on branch
+		vector<vector<int>> get_event_counter_vectors();
+
+
 	private:
 		void simulateAlongTree(tree::nodeP t,
 			const genomeType& fatherSeq,

@@ -17,16 +17,6 @@ vector<genomeType> Simulator::simulateBasedOnTree(string & treeFileName) {
 	// a root genome of length six in two chromosomes would be V = {{0,1,2},{3,4,5}}
 	vector<genomeType> simulatedLeavesGenomes; 
 	 
-	//added to test prediction of fusion and fission events. counting the number of each event and trying to predict them
-	fis_counter = 0;
-	fus_counter = 0;
-
-	// Added for revision (15.12.21). Used to count the number of inversions and translocations in a tree.
-	// Note- Tal prefers to count the events per branch but it demands some major changes to the code.
-	// 21.12.21 changed to local variables (insread of static ones stored in the parameter object. 
-	//Added vectors to save for each branch. initiation should be moved inside (for each branch instead of once per simulation)
-	inv_counter = 0;
-	trans_counter = 0;
 
 	//currIdToInsert = _rootLength; //A.M for insertion IDs see definition for details
 	// Initating the root sequence
@@ -34,7 +24,6 @@ vector<genomeType> Simulator::simulateBasedOnTree(string & treeFileName) {
 //A.M uses the chromosomelegths vector to create the genome
 	//A.M this function results in a genome which is a vector of vectors like this:
 	//A.M ancestralSequence = {{0,1,2,3,...},{...},...,{...,N}}
-	//superSequence = ancestralSequence; //A.M I don't need this.
 	tree t(treeFileName);
 	simulateAlongTree(t.getRoot(), ancestralGenome, simulatedLeavesGenomes);
 	//A.M genomes are transferred to genomeClass objects after we have the leaves vector.
@@ -187,70 +176,6 @@ void Simulator::simualteEventsAlongAspecificBranch_rec(const genomeType& ancestr
 		cout << outputGenome[i].size() << " ";
 	}
 	cout << endl;*/
-	/*
-	bool isDeletion = true;
-	
-	if (uniform() < sequenceWiseInsertionRate / (sequenceWiseInsertionRate + sequenceWiseDeletionRate)) isDeletion = false;
-	if (isDeletion) {
-		//cout << "entering isDeletion ";
-		int theStartingPoint = uniform(0, ancestralSequence.size() - 1);
-		int deletionLength = drawZipf(_A_param, MaxIndelSize);
-		if (theStartingPoint == 0 && deletionLength >= ancestralSequence.size()) {
-			deletionLength = ancestralSequence.size()-1; // we do not want the entire sequence to be deleted...
-		}
-	//	cout << "deletion length=" << deletionLength<< endl;
-		//int deletionLength = powerLaw(powerLawParam, N);
-		size_t positionInWhichDeletionEnds = theStartingPoint + deletionLength;
-		if (positionInWhichDeletionEnds > outputSeq.size()) positionInWhichDeletionEnds = outputSeq.size();
-		outputSeq.erase(outputSeq.begin() + theStartingPoint, outputSeq.begin() + positionInWhichDeletionEnds);
-		simualteWithIndelsAlongAspecificBranch(outputSeq, branchLength - waitingTime, outputSeq);
-	//	cout << "exiting deletion" << endl;
-		return;
-	}
-	else { // insertions
-		//cout << "entering insertion ";
-		int theStartingPoint = uniform(0, ancestralSequence.size()+1);
-		int insertionLength = drawZipf(_A_param, MaxIndelSize);
-		//cout << "insertion length=" << insertionLength << endl;
-		//int insertionLength = powerLaw(powerLawParam, N);
-		vector<nucID>::iterator it;
-		if (theStartingPoint > ancestralSequence.size()) {
-			it = outputSeq.end();
-		}
-		else {
-			it = outputSeq.begin()+theStartingPoint;
-		}
-		//Initiating the array of new IDs to insert
-		for (size_t m = 0; m < insertionLength; m++) {
-			tmparray[m] = currIdToInsert;
-			currIdToInsert++;
-		}
-
-		// this part updates the super sequence
-		int numberBeforeInsertion = -1; // this indicates an insertion before 0.
-		if (theStartingPoint > outputSeq.size()) {
-			numberBeforeInsertion = outputSeq[outputSeq.size() - 1];
-		}
-		else {
-			if (theStartingPoint >= 1) numberBeforeInsertion = outputSeq[theStartingPoint - 1];
-		}
-		int j = 0; 
-		if (numberBeforeInsertion == -1) j = -1;
-		else {
-			for (; j < superSequence.size(); ++j) {
-				if (superSequence[j] == numberBeforeInsertion) break;
-			}
-		}
-		vector<nucID>::iterator it2 = superSequence.begin()+(j +1);
-		superSequence.insert(it2, tmparray, tmparray+ insertionLength);
-
-		// updating the sequence itself
-		//it2 = it2 + insertionLength;
-		outputSeq.insert(it, tmparray, tmparray + insertionLength);
-		
-		simualteEventsAlongAspecificBranch(outputGenome, branchLength - waitingTime, outputGenome);
-
-	}*/
 	simualteEventsAlongAspecificBranch(outputGenome, branchLength - waitingTime, outputGenome);
 
 }
@@ -319,90 +244,15 @@ void Simulator::simulateAlongTree(tree::nodeP t,
 	}
 }
 
-/* A.M Not relevant to my project
-void outputInFastaFormat(const vector<nucID> & leafSequence) {
-	size_t j = 0;
-	for (size_t i = 0; i < superSequence.size(); ++i) {
-		if (j == leafSequence.size()) cout << "- ";
-		else if (superSequence[i] == leafSequence[j]) {
-			cout << superSequence[i]<<" ";
-			++j;
-		}
-		else {
-			cout << "- ";
-		}
-	}
+// create a vector of all event vectors and return it. 22.12.21. 
+// Might be changed later according to the relations between the C++ and python
+vector<vector<int>> Simulator::get_event_counter_vectors() {
+	vector<vector<int>> output_vector;
+	output_vector.push_back(inv_counter_vec);
+	output_vector.push_back(trans_counter_vec);
+	output_vector.push_back(fis_counter_vec);
+	output_vector.push_back(fus_counter_vec);
+	return output_vector;
 }
 
-void outputInFastaFormat(const vector<vector<nucID> > & simulatedLeavesSequences) {
-	for (size_t i = 0; i < simulatedLeavesSequences.size(); ++i) {
-		cout << ">S" << i << endl;
-		outputInFastaFormat(simulatedLeavesSequences[i]);
-		cout << endl;
-	}
-}
 
-void simulationToMSA(const vector<vector<nucID> > & simulatedLeavesSequences, vector<string> & msa) {
-	for (size_t l = 0; l < simulatedLeavesSequences.size(); ++l) {//go over all the leaves
-		string tmp;												  // reset string for the current sequence
-		size_t j = 0;											  // reset index for the current sequence
-		for (size_t i = 0; i < superSequence.size(); ++i) {		  // go over the superSequence
-			if (j == simulatedLeavesSequences[l].size()) {		  // if currenr sequence ended, add "-"
-				tmp.append("-");
-			}
-			else if (superSequence[i] == simulatedLeavesSequences[l][j]) { // if current sequence = superSequence
-				tmp.append("A");											// add arbitrary character
-				++j;
-			}
-			else {														  // else add "-"
-				tmp.append("-");
-			}
-		}
-		msa.push_back(tmp);												// add current string to MSA
-	}
-}
-*/
-
-
-
-//vector<string> Simulator::mainSimualteAlongAtree()
-//{
-//	int length = 3000;
-//	vector<vector<nucID> > simulatedLeavesSequences;
-//	vector<nucID> ancestralSequence;
-//	int currIdToInsert = length;
-//	for (int i = 0; i < length; ++i) {
-//		ancestralSequence.push_back(i);
-//	}
-//	superSequence = ancestralSequence;
-//	string treeFile = "C:\\Users\\Dana Rapoport\\Downloads\\SpartaABC_with_INDELible_20170320_bundle\\SpartaABC_with_INDELible_20170320_bundle\\run_example\\small_tree.txt";
-//	tree t(treeFile);
-//	simulateAlongTree(t.getRoot(), ancestralSequence, simulatedLeavesSequences, 1.3, 0.02, 0.02);
-//	vector<string> msa;
-//	simulationToMSA(simulatedLeavesSequences, msa);
-//	return msa;
-//	//for (int k = 0; k < msa.size(); ++k) { cout << msa[k] << endl; }
-//	/*printSequences(simulatedLeavesSequences);
-//	// printing the super sequence:
-//	cout << "\nthe super sequence is: " << endl;
-//	for (size_t k = 0; k < superSequence.size(); ++k) {
-//		cout << superSequence[k] << " ";
-//	}
-//	cout << endl;
-//	cout << " the final leaf sequences in Fasta format\n";
-//	outputInFastaFormat(simulatedLeavesSequences);
-//	*/
-//	//return 0;
-//}
-
-/*
-int main2() {
-
-	size_t rootLength = 50;
-	double A_param = 1.2;
-	double IR = 0.01;
-	double DR = 0.03;
-	//Simulator sim(rootLength, A_param, IR, DR);//changed builder parameters. should adjust if testing needed
-	//sim.test();
-}
-*/
