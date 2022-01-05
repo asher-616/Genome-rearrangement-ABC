@@ -3,7 +3,7 @@
 #define GENOMES_H
 #include <vector>
 #include "genome.h"
-#include "trie.h" 
+//#include "trie.h" 
 #include <fstream>
 #include <string>
 #include <iostream>

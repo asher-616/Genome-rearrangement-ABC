@@ -180,7 +180,7 @@ void genomes::calcSumStatBrothersOnly() {
 	// 3. what about events that occured in on a branch leading to an internal node? (won't show when comparing brother leaves only) - we use closest leaf to represent internal nodes
 
 
-	calcUniqueBlocksBasedOnTree(); // need testing
+	calcUniqueBlocksBasedOnTree(); // needs testing
 	size_t sumChromosomes = 0;
 
 
@@ -215,7 +215,8 @@ void genomes::calcSumStatBrothersOnly() {
 }
 
 void genomes::calcUniqueBlocksBasedOnTree() { //need testing
-	tree t(Re_params::_inputTreeFileName); // replace to reduce file reading
+	//tree t(Re_params::_inputTreeFileName); // replaced to reduce file reading
+	tree t = Re_params::_inputTree;
 	vector<GenomeClass>::iterator genomeIt = genomesVect.begin();
 	genomeAndLengthPair TreeResSet = calcUniqueBlocksAlongTree(t.getRoot(), genomeIt); // not final!
 	// might consider add chromosome set and tip set sizes to the SS
@@ -381,7 +382,8 @@ void genomes::updateHashAndVector(vector<int>& seq, vector<int>& blockVec, map<v
 }
 
 resultType genomes::calcFisFusBasedOnTree() {
-	tree t(Re_params::_inputTreeFileName); // replace to reduce file handling (costly)
+	// tree t(Re_params::_inputTreeFileName); // replaced to reduce file handling (costly)
+	tree t = Re_params::_inputTree;
 	vector<GenomeClass>::iterator genomeIt = genomesVect.begin();
 	resultType TreeResSet = calcFisFusAlongTree(t.getRoot(), genomeIt);
 	// might consider add chromosome set and tip set sizes to the SS

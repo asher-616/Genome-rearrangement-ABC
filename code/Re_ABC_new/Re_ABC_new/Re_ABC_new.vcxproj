@@ -151,25 +151,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="errorMsg.cpp" />
     <ClCompile Include="FastZip.cpp" />
     <ClCompile Include="genome.cpp" />
     <ClCompile Include="GenomeRearrangements.cpp" />
     <ClCompile Include="genomes.cpp" />
+    <ClCompile Include="logFile.cpp" />
     <ClCompile Include="RandomGenerators.cpp" />
     <ClCompile Include="ReABC_new.cpp" />
     <ClCompile Include="ReABC_params.cpp" />
+    <ClCompile Include="readTree.cpp" />
     <ClCompile Include="simulator.cpp" />
     <ClCompile Include="tree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="definitions.h" />
+    <ClInclude Include="errorMsg.h" />
     <ClInclude Include="FastZip.h" />
     <ClInclude Include="genome.h" />
     <ClInclude Include="GenomeRearrangements.h" />
     <ClInclude Include="genomes.h" />
+    <ClInclude Include="logFile.h" />
     <ClInclude Include="RandomGenerators.h" />
     <ClInclude Include="ReABC_new.h" />
     <ClInclude Include="ReABC_params.h" />
+    <ClInclude Include="readTree.h" />
     <ClInclude Include="simulator.h" />
     <ClInclude Include="tree.h" />
   </ItemGroup>

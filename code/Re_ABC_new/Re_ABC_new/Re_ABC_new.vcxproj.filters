@@ -42,6 +42,15 @@
     <ClCompile Include="genomes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="errorMsg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="logFile.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="readTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ReABC_new.h">
@@ -72,6 +81,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="genomes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="errorMsg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="logFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="readTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

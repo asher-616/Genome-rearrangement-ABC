@@ -3,20 +3,27 @@
 // Updated by: Asher Moshe & Elya Wygoda
 #include "ReABC_new.h"
 
-vector<vector<double> > perform_simulation(vector<int> ChromosomeLengths, double a_param, double inv_rate, double trans_rate,
-	double fus_rate, double fis_rate, double dup_rate, double loss_rate, double root_a_param) {
+vector<vector<double> > perform_simulation(vector<int> ChromosomeLengths) {
 
-	Simulator sim(ChromosomeLengths, a_param, inv_rate, trans_rate, fus_rate,
-		fis_rate, dup_rate, loss_rate, root_a_param); // create simulation object
+	Simulator sim(ChromosomeLengths, Re_params::_a_param, Re_params::_inv_rate, Re_params::_trans_rate, Re_params::_fus_rate,
+		Re_params::_fis_rate, Re_params::_dup_rate, Re_params::_loss_rate, Re_params::_root_a_param, Re_params::_inputTree); // create simulation object
 
-	vector<genomeType> simulatedGenomes = sim.simulateBasedOnTree(Re_params::_inputTreeFileName);
+	vector<genomeType> simulatedGenomes = sim.simulateBasedOnTree();
 	// here I need to copy the event counter vectors from the sim object
 	vector<vector<int>> counters_vec = sim.get_event_counter_vectors(); // order of counter vectors is inv, trans, fis, fus
 	// what next? need to return it to the python
 	
 }
+// pipeline scheme: (03.01.22)
+// step 1 - set parameters into param object
+// Can be set using param object. param object is initialized with a tree and assigned parameters using init_params 
+// (overloaded for both M0 and M1 parameters)
+// IMPORTANT: currently the parameters are static inside the param class.
+// Can this work along with the python or should we change it?
 
+// step 2 - simulate and return simulation and counters
 
+// step 3 - calculate summary statistics
 
 
 

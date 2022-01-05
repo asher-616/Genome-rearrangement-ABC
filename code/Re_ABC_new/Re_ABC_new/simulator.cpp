@@ -1,6 +1,4 @@
-#include <iostream>
-#include "tree.h"
-#include "treeIt.h"
+
 #include "simulator.h"
 
 using namespace std;
@@ -10,22 +8,40 @@ const int MaxIndelSize = 50; // maximum length of insertion or deletion
 vector<nucID> superSequence;
 int tmparray[MaxIndelSize];
 
+/*
+explicit Simulator(vector<int> ChromosomeLength, double AParam, double InvertRate, double TranslocateRatio, double FusionRate,
+	double FissionRate, double DuplicationRate, double LossRate, double randRootAparam, tree & t) :
+	_rootChromosomes(ChromosomeLength), _A_param(AParam), _InvR(InvertRate), _TrR(TranslocateRatio), _FuR(FusionRate), _FiR(FissionRate),
+	_DR(DuplicationRate), _LR(LossRate), zip(AParam, Re_params::_maxBlock), rootZip(randRootAparam, Re_params::_rootMaxFamilySize), _t(t) {};
+	*/
+Simulator::Simulator(vector<int> ChromosomeLength, double AParam, double InvertRate, double TranslocateRatio, double FusionRate,
+	double FissionRate, double DuplicationRate, double LossRate, double randRootAparam, tree & t) {
+	_rootChromosomes = ChromosomeLength;
+	_A_param = AParam;
+	_InvR = InvertRate;
+	_TrR = TranslocateRatio;
+	_FuR = FusionRate;
+	_FiR = FissionRate;
+	_DR = DuplicationRate;
+	_LR = LossRate;
+	zip = FastZip(AParam, Re_params::_maxBlock); 
+	rootZip = FastZip(randRootAparam, Re_params::_rootMaxFamilySize);
+}
 
-vector<genomeType> Simulator::simulateBasedOnTree(string & treeFileName) {
+vector<genomeType> Simulator::simulateBasedOnTree() {
 	// In the beginning, each genome is stored as a vector 
 	// of vectors of integeres, i.e., vector<vector <int> > for example
-	// a root genome of length six in two chromosomes would be V = {{0,1,2},{3,4,5}}
+	// a root genome of length six in two chromosomes could be V = {{0,1,2},{3,4,5}}
 	vector<genomeType> simulatedLeavesGenomes; 
 	 
-
 	//currIdToInsert = _rootLength; //A.M for insertion IDs see definition for details
 	// Initating the root sequence
 	genomeType ancestralGenome = generateRootGenomeNoDupWLOG(); //no duplications!! starting with all positive genes (as suggested by Itsik)
-//A.M uses the chromosomelegths vector to create the genome
+	//A.M uses the chromosomelegths vector to create the genome
 	//A.M this function results in a genome which is a vector of vectors like this:
 	//A.M ancestralSequence = {{0,1,2,3,...},{...},...,{...,N}}
-	tree t(treeFileName);
-	simulateAlongTree(t.getRoot(), ancestralGenome, simulatedLeavesGenomes);
+	//tree t(treeFileName); // changed function so we get the tree object as input, thus reducing the times we read from file.
+	simulateAlongTree(_t.getRoot(), ancestralGenome, simulatedLeavesGenomes);
 	//A.M genomes are transferred to genomeClass objects after we have the leaves vector.
 	
 	return simulatedLeavesGenomes;
@@ -40,27 +56,6 @@ void Simulator::test() //used to test various class objects that cannot be acces
 }
 
 
-genomeType Simulator::generateRootGenomeOld() { //CHECH AND CHANGE XXXXXXXXXXXXXX
-	// Uses predetermined chromosome sizes (drawn from multinomial distribution somewhere else)
-	//A.M NOTE: a newer version exist that allows duplicates of the same gene (may be used for M2 model)
-	genomeType genome;
-	int GeneNum = 1; //used for continuity of gene numbers throughout the genome
-	for (size_t i = 0; i < _rootChromosomes.size(); i++)
-	{
-		vector<int> tempChromosome;
-		for (int j = 0; j < _rootChromosomes[i]; j++)
-		{
-			double orient = uniform();
-			if (orient < 0.5)
-				tempChromosome.push_back(GeneNum*(-1));
-			else
-				tempChromosome.push_back(GeneNum);
-			GeneNum++;
-		}
-		genome.push_back(tempChromosome);
-	}
-	return genome;
-}
 
 genomeType Simulator::generateRootGenomeNoDupWLOG() { 
 	// Uses predetermined chromosome sizes (drawn from multinomial distribution somewhere else)
@@ -127,14 +122,7 @@ genomeType Simulator::generateRootGenome() {
 }
 
 
-void printSequences(const vector<vector<nucID> >& v) {
-	for (size_t i = 0; i < v.size(); ++i) {
-		for (size_t j = 0; j < v[i].size(); ++j) {
-			cout << v[i][j] << " ";
-		}
-		cout << endl;
-	}
-}
+
 
 void Simulator::simualteEventsAlongAspecificBranch_rec(const genomeType& ancestralGenome,
 													   double branchLength,

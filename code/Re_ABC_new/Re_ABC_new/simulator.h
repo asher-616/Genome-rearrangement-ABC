@@ -8,6 +8,8 @@
 #include "FastZip.h"
 #include "RandomGenerators.h"
 #include "ReABC_params.h"
+#include <iostream>
+//#include "treeIt.h"
 
 using namespace std;
 
@@ -17,11 +19,13 @@ typedef std::vector<chromosomeType> genomeType; //A.M
 
 class Simulator {
 	public:
-		explicit Simulator(vector<int> ChromosomeLength, double AParam, double InvertRate, double TranslocateRatio, double FusionRate,
-			double FissionRate, double DuplicationRate, double LossRate, double randRootAparam) :
+		/*explicit Simulator(vector<int> ChromosomeLength, double AParam, double InvertRate, double TranslocateRatio, double FusionRate,
+			double FissionRate, double DuplicationRate, double LossRate, double randRootAparam, tree & t) :
 			_rootChromosomes(ChromosomeLength), _A_param(AParam), _InvR(InvertRate), _TrR(TranslocateRatio), _FuR(FusionRate), _FiR(FissionRate),
-			_DR(DuplicationRate), _LR(LossRate), zip(AParam, GRABC_options::_maxBlock), rootZip(randRootAparam,GRABC_options::_rootMaxFamilySize) {};
-		vector<genomeType> simulateBasedOnTree(string & treeFileName);
+			_DR(DuplicationRate), _LR(LossRate), zip(AParam, Re_params::_maxBlock), rootZip(randRootAparam, Re_params::_rootMaxFamilySize), _t(t) {};*/
+		Simulator(vector<int> ChromosomeLength, double AParam, double InvertRate, double TranslocateRatio, double FusionRate,
+			double FissionRate, double DuplicationRate, double LossRate, double randRootAparam, tree & t);
+		vector<genomeType> simulateBasedOnTree();
 		void test();
 
 		static int inv_counter, trans_counter, fis_counter, fus_counter; // 21.12.21 to count events on branch
@@ -39,7 +43,7 @@ class Simulator {
 			double branchLength, genomeType& outputGenome); //an old recursive version
 
 		genomeType generateRootGenome();//new root method. used for duplications (for M2. not used in M0 or M1)
-		genomeType generateRootGenomeOld(); // no duplications, each gene direction decided arbitrarily
+		//genomeType generateRootGenomeOld(); // no duplications, each gene direction decided arbitrarily REMOVED 03.01.21
 		genomeType generateRootGenomeNoDupWLOG(); // no duplications, all genes start as positive (WLOG)
 		size_t _rootLength;
 		vector<int> _rootChromosomes; //vector of chromosome lengths in root
@@ -50,6 +54,8 @@ class Simulator {
 		double _FiR; //fission rate per position
 		double _DR; // gene duplication rate per gene. For the future
 		double _LR; // gene loss rate per gene. for the furute
+
+		tree _t;
 
 		FastZip zip;
 		FastZip rootZip;
