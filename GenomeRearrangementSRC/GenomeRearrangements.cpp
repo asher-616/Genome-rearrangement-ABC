@@ -1,7 +1,9 @@
 #include "GenomeRearrangements.h"
 
 
- void drawRandomLocationOld(vector<int> & location, const vector<vector<int> > & genome, const int genomelength) {
+int inv_counter, trans_counter, fis_counter, fus_counter;
+
+void drawRandomLocationOld(vector<int> & location, const vector<vector<int> > & genome, const int genomelength) {
 	//receives a genome (and length) and returns a randomly chosen (uniform distribution) gene location (vector of chromosome number and gene number)
 	unsigned int GeneNum = uniform(0,genomelength); //need to draw a random number in range (1-genomelength)
 	unsigned int chromosome = 0;
@@ -77,8 +79,10 @@ void SimulateEvent(vector<vector<int> > & genome, int genomeLength, double trans
 	*/
 	for (size_t i = 0; i < genome.size(); i++)
 	{
-		if (genome[i].size() == 0) cout << "BUG!!!!!!!" << endl;
-		exit(0);
+		if (genome[i].size() == 0){
+			cout << "BUG!!!!!!!" << endl;
+			exit(0);
+		}
 	}
 	double someUniformRandomNum = uniform(); //random in range [0,1] 
 	vector<int> location;
@@ -145,7 +149,9 @@ void SimulateEvent(vector<vector<int> > & genome, int genomeLength, double trans
 	{
 		if (!forward)
 			location[1] -= (blockSize - 1) ; //change location to event start point. the -1 explained in the transposition event
-		Simulator::inv_counter++;
+		inv_counter++;
+		std::cout << "inv_counter: " << inv_counter << "\n";
+
 		Inversion(genome, location, blockSize);
 		//cout << "inversion " << location[0] << " " << location[1] << endl;
 	}
@@ -168,7 +174,7 @@ void SimulateEvent(vector<vector<int> > & genome, int genomeLength, double trans
 			//cout << "destination " << destination[0] <<" "<< destination[1] << endl; //for testing
 		} while (destination[0] == location[0] && destination[1] >= location[1] && destination[1]<= location[1]+blockSize);
 		//cout << "destination " << destination[0] << " " << destination[1] << "ch size " << genome[destination[0]].size() << endl;
-		Simulator::trans_counter++;
+		trans_counter++;
 		Transposition(genome, location, blockSize, destination);
 		//cout << "xxxxx" << endl;
 	}
@@ -182,13 +188,13 @@ void SimulateEvent(vector<vector<int> > & genome, int genomeLength, double trans
 			chromosome2 = uniform(0, genome.size()-1);
 		} while (chromosome1 == chromosome2);
 		//cout << "fusion " << chromosome1 << "+ " << chromosome2 << endl;
-		Simulator::fus_counter++;
+		fus_counter++;
 		Fusion(genome, chromosome1, chromosome2);
 	}
 	else if (someUniformRandomNum < (inversionRate + transpositionRate + fusionRate + fissionRate) / totalRates) //for when duplications and deletions are added
 	{
 		//do fission
-		Simulator::fis_counter++;
+		fis_counter++;
 		Fission(genome, genomeLength);
 	}
 	

@@ -63,5 +63,6 @@
         "typeinfo": "cpp",
         "valarray": "cpp",
         "variant": "cpp"
-    }
+    },
+    "python.pythonPath": "/home/elyawy/envs/buildenv/bin/python"
 }

@@ -25,7 +25,7 @@ rule CXX_COMPILER__LibsModule_Release
 # Rule for linking CXX static library.
 
 rule CXX_STATIC_LIBRARY_LINKER__LibsModule_Release
-  command = $PRE_LINK && /tmp/pip-build-env-e4kjnni6/overlay/lib/python3.8/site-packages/cmake/data/bin/cmake -E rm -f $TARGET_FILE && /usr/bin/ar qc $TARGET_FILE $LINK_FLAGS $in && /usr/bin/ranlib $TARGET_FILE && $POST_BUILD
+  command = $PRE_LINK && /tmp/pip-build-env-kdf8t4_n/overlay/lib/python3.8/site-packages/cmake/data/bin/cmake -E rm -f $TARGET_FILE && /usr/bin/ar qc $TARGET_FILE $LINK_FLAGS $in && /usr/bin/ranlib $TARGET_FILE && $POST_BUILD
   description = Linking CXX static library $TARGET_FILE
   restat = $RESTAT
 
@@ -61,7 +61,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /tmp/pip-build-env-e4kjnni6/overlay/lib/python3.8/site-packages/cmake/data/bin/cmake --regenerate-during-build -S/home/elyawy/Developement/Msc/projects/Genome-rearrangement-ABC-new -B/home/elyawy/Developement/Msc/projects/Genome-rearrangement-ABC-new/build/temp.linux-x86_64-3.8
+  command = /tmp/pip-build-env-kdf8t4_n/overlay/lib/python3.8/site-packages/cmake/data/bin/cmake --regenerate-during-build -S/home/elyawy/Developement/Msc/projects/Genome-rearrangement-ABC-new -B/home/elyawy/Developement/Msc/projects/Genome-rearrangement-ABC-new/build/temp.linux-x86_64-3.8
   description = Re-running CMake...
   generator = 1
 
@@ -70,7 +70,7 @@ rule RERUN_CMAKE
 # Rule for cleaning all built files.
 
 rule CLEAN
-  command = /tmp/pip-build-env-e4kjnni6/overlay/bin/ninja $FILE_ARG -t clean $TARGETS
+  command = /tmp/pip-build-env-kdf8t4_n/overlay/bin/ninja $FILE_ARG -t clean $TARGETS
   description = Cleaning all built files...
 
 
@@ -78,6 +78,6 @@ rule CLEAN
 # Rule for printing all primary targets available.
 
 rule HELP
-  command = /tmp/pip-build-env-e4kjnni6/overlay/bin/ninja -t targets
+  command = /tmp/pip-build-env-kdf8t4_n/overlay/bin/ninja -t targets
   description = All primary targets available:
 

@@ -10,9 +10,11 @@
 #include <vector>
 //#include <algorithm>
 #include <iostream>
-#include "simulator.h" // used to update counters
 
 using namespace std;
+
+// 21.12.21 to count events on branch. 31.1.22 moved here from simulator
+extern int inv_counter, trans_counter, fis_counter, fus_counter;
 
 void drawRandomLocationOld(vector<int>& location, const vector<vector<int> > & genome, const int genomelength);
 // drawRandomLocationOld was used pre-Itsik. Code left for reference
@@ -26,3 +28,4 @@ void Fission(vector<vector<int> > & genome, int genomeLength);
 //to be added in the future
 void GeneDuplication(vector<vector<int> > & genome, vector<int> eventStartPoint, vector<int> eventdestination);
 void GeneLoss(vector<vector<int> > & genome, vector<int> eventStartPoint);
+

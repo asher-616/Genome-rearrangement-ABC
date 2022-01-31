@@ -12,7 +12,10 @@ ADD_LIBRARY(LibsModule
     GenomeRearrangementSRC/RandomGenerators.cpp
     GenomeRearrangementSRC/readTree.cpp
     GenomeRearrangementSRC/simulator.cpp
+    GenomeRearrangementSRC/someUtil.cpp
     GenomeRearrangementSRC/tree.cpp
+    GenomeRearrangementSRC/treeIt.cpp
+    GenomeRearrangementSRC/treeUtil.cpp
 )
 
 pybind11_add_module(GenomeRearrangement src/main.cpp)

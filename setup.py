@@ -2,6 +2,7 @@ import os
 import re
 import subprocess
 import sys
+import shutil
 
 from setuptools import Extension, setup
 from setuptools.command.build_ext import build_ext
@@ -119,11 +120,17 @@ class CMakeBuild(build_ext):
 
 # The information here can also be placed in setup.cfg - better separation of
 # logic and declaration, and simpler if you include description/version in a file.
+try:
+    shutil.rmtree("/home/elyawy/Developement/Msc/projects/Genome-rearrangement-ABC-new/build")
+    shutil.rmtree("/home/elyawy/Developement/Msc/projects/Genome-rearrangement-ABC-new/GenomeRearrangement.egg-info")
+except OSError as e:
+    print("Error: %s - %s." % (e.filename, e.strerror))
+
 setup(
     name="GenomeRearrangement",
     version="0.0.1",
-    author="Dean Moldovan",
-    author_email="dean0x7d@gmail.com",
+    author="Asher Moshe",
+    author_email="asher616@gmail.com",
     description="A test project using pybind11 and CMake",
     long_description="",
     ext_modules=[CMakeExtension("GenomeRearrangement")],

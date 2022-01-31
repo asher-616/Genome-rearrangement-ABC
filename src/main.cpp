@@ -22,7 +22,7 @@ PYBIND11_MODULE(GenomeRearrangement, m) {
 
     py::class_<Simulator>(m, "Sim")
         .def(py::init<const std::string&>())
-        .def("init_sim", &Simulator::initSimulator)
+        .def("init_sim", &Simulator::initSim)
         .def("run_sim", &Simulator::simulateBasedOnTree)
         .def("get_events_count", &Simulator::get_event_counter_vectors)
         .def("get_tree", &Simulator::getSimTree);
@@ -31,4 +31,7 @@ PYBIND11_MODULE(GenomeRearrangement, m) {
         .def(py::init<std::string, std::string>())
         .def(py::init<const vector<genomeType> &, tree>())
         .def("get_sum_stats", &genomes::get_summary_stats_vector);
+
+    py::class_<tree>(m, "tree")
+        .def(py::init<>());
 }

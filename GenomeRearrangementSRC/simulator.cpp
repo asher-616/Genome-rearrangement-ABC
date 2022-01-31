@@ -28,11 +28,6 @@ void Simulator::initSim(vector<int> ChromosomeLength, double AParam, double Inve
 	_LR = LossRate;
 	zip = FastZip(AParam, 50); 
 	rootZip = FastZip(randRootAparam, 50);
-
-	inv_counter = 0;
-	trans_counter = 0;
-	fis_counter = 0;
-	fus_counter = 0;
 }
 
 tree Simulator::getSimTree() {
@@ -40,6 +35,12 @@ tree Simulator::getSimTree() {
 }
 
 vector<genomeType> Simulator::simulateBasedOnTree() {
+	// reset event counters.
+	inv_counter_vec.clear();
+	trans_counter_vec.clear();
+	fis_counter_vec.clear();
+	fus_counter_vec.clear();
+	// 21.12.21 to save events for all branches
 	// In the beginning, each genome is stored as a vector 
 	// of vectors of integeres, i.e., vector<vector <int> > for example
 	// a root genome of length six in two chromosomes could be V = {{0,1,2},{3,4,5}}
@@ -216,6 +217,7 @@ void Simulator::simualteEventsAlongAspecificBranch(const genomeType& ancestralGe
 
 
 	} while (true);
+	cout << inv_counter << "\n";
 	inv_counter_vec.push_back(inv_counter);
 	trans_counter_vec.push_back(trans_counter);
 	fis_counter_vec.push_back(fis_counter);

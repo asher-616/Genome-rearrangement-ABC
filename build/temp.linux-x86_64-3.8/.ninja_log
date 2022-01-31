@@ -1,9 +1,17 @@
 # ninja log v5
-1	551	1641384152342929917	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/logFile.cpp.o	70d07ef2544c641f
-0	670	1641384152462930024	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/errorMsg.cpp.o	14adae3db44b76d0
-1	721	1641384152510930066	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/RandomGenerators.cpp.o	eaa5a3527ef0bf2
-0	1013	1641384152802930324	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/FastZip.cpp.o	d75c3b7ccba43cf6
-0	1017	1641384152806930328	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/genome.cpp.o	3fd4d69b6f1edd3d
-2	1386	1641384153178930656	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/simulator.cpp.o	9975350c631a92e5
-0	1473	1641384153262930730	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/GenomeRearrangements.cpp.o	36483d45679609ec
-0	2864	1641384154654931961	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/genomes.cpp.o	d6be2c930909dff6
+1	531	1643639096544667002	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/logFile.cpp.o	70d07ef2544c641f
+1	731	1643639096744668398	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/RandomGenerators.cpp.o	eaa5a3527ef0bf2
+0	851	1643639096864669236	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/errorMsg.cpp.o	14adae3db44b76d0
+1	980	1643639096992670130	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/readTree.cpp.o	1906f0ab564223d6
+0	1097	1643639097108670939	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/FastZip.cpp.o	d75c3b7ccba43cf6
+1	1454	1643639097468673452	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/GenomeRearrangements.cpp.o	36483d45679609ec
+0	1474	1643639097488673591	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/genome.cpp.o	3fd4d69b6f1edd3d
+731	1494	1643639097508673731	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/treeIt.cpp.o	cc5506ed3c19c016
+2	1982	1643639097996677137	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/simulator.cpp.o	9975350c631a92e5
+532	3100	1643639099112684925	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/tree.cpp.o	d50789b30ca03994
+2	3525	1643639099536687884	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/someUtil.cpp.o	241dda6ec47b5329
+851	3699	1643639099712689112	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/treeUtil.cpp.o	bce0b1de672ae2ce
+1	3728	1643639099740689307	CMakeFiles/LibsModule.dir/GenomeRearrangementSRC/genomes.cpp.o	d6be2c930909dff6
+3728	3739	1643639099752689391	libLibsModule.a	2989e3b236611633
+981	4974	1643639100988698017	CMakeFiles/GenomeRearrangement.dir/src/main.cpp.o	99ba05705ef9257b
+4975	7574	1643639103588716161	../lib.linux-x86_64-3.8/GenomeRearrangement.cpython-38-x86_64-linux-gnu.so	6bd822f27c9a5fbb

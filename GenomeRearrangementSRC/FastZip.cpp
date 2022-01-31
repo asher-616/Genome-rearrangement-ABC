@@ -20,7 +20,6 @@ FastZip::FastZip(double aParam, int max)
 		ratesVector[i] /= sumRates;
 		//cout << ratesVector[i]<< "\t";
 	}
-	cout << endl;
 	for (size_t i = 0; i < ratesVector.size(); i++)
 	{
 		ratesVector[i] *= ratesVector.size();

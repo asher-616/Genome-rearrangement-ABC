@@ -31,7 +31,7 @@ class Simulator {
 		vector<genomeType> simulateBasedOnTree();
 		void test();
 
-		static int inv_counter, trans_counter, fis_counter, fus_counter; // 21.12.21 to count events on branch
+		
 		vector<vector<int>> get_event_counter_vectors();
 
 		tree getSimTree();
