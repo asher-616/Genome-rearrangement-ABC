@@ -2,7 +2,7 @@
 
 #include "someUtil.h"
 #include "errorMsg.h"
-#include "talRandom.h"
+#include "RandomGenerators.h"
 #include <time.h>
 #include <cmath>
 #include <ctime>
@@ -748,7 +748,7 @@ MDOUBLE calcPearsonCorrelation(const Vdouble& oneRatesVec, const Vdouble& otherR
 }
 
 /********************************************************************************************
-Benjamini–Hochberg–Yekutieli procedure controls the false discovery rate
+Benjaminiï¿½Hochbergï¿½Yekutieli procedure controls the false discovery rate
 *********************************************************************************************/
 MDOUBLE computeFDRthreshold(Vdouble& pVals, MDOUBLE levelOfFDRcontroled, bool isPValsSorted){
 	MDOUBLE FDRthreshold = 0;
@@ -1043,7 +1043,7 @@ int giveRandomState(const int alphabetSize, const int beginningState, const VVdo
 	//A.M. weird algorithm
 	for (int loop = 0 ; loop < 100000 ; ++loop) 
 	{
-		MDOUBLE theRandNum = talRandom::giveRandomNumberBetweenZeroAndEntry(1.0);
+		MDOUBLE theRandNum = uniform();  // was talRandom::giveRandomNumberBetweenZeroAndEntry(1.0);
 		MDOUBLE sum = 0.0;
 		for (int state = 0; state < alphabetSize; ++state) 
 		{
@@ -1060,7 +1060,7 @@ int giveRandomState(const int alphabetSize, const int beginningState, const VVdo
 
 int giveRandomState(const int alphabetSize, const Vdouble &frequencies)  {
 	for (int loop =0 ;loop<100000 ;loop++) {
-		MDOUBLE theRandNum = talRandom::giveRandomNumberBetweenZeroAndEntry(0.999);
+		MDOUBLE theRandNum = uniform()*0.999; // was talRandom::giveRandomNumberBetweenZeroAndEntry(0.999);
 		MDOUBLE sum = 0.0;
 		for (int j=0; j < alphabetSize;++j) {
 			sum+=frequencies[j];

@@ -3,7 +3,7 @@
 
 #include "logFile.h"
 #include "definitions.h"
-#include "alphabet.h"
+//#include "alphabet.h"
 #include <string>
 #include <iostream>
 using namespace std;

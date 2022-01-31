@@ -28,6 +28,11 @@ void Simulator::initSim(vector<int> ChromosomeLength, double AParam, double Inve
 	_LR = LossRate;
 	zip = FastZip(AParam, 50); 
 	rootZip = FastZip(randRootAparam, 50);
+
+	inv_counter = 0;
+	trans_counter = 0;
+	fis_counter = 0;
+	fus_counter = 0;
 }
 
 tree Simulator::getSimTree() {
