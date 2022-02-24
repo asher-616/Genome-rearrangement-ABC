@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.4...3.18)
+cmake_minimum_required(VERSION 3.4...3.22)
 project(GenomeRearrangement)
 
 add_subdirectory(pybind11)

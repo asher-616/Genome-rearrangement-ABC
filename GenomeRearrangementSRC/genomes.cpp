@@ -246,7 +246,7 @@ vector<int> genomes::compareBlocksGenomes(GenomeClass& genome1, GenomeClass& gen
 		{
 			//cout << j << ' '; //for testing
 			blockseq.push_back(genome1.genome[i][j]);
-			if (j + 1 == chromosomeSize)//reached end of chromosome
+			if (j + 1 == chromosomeSize)  //reached end of chromosome
 			{
 				blocksVec.push_back(block); 
 
@@ -404,6 +404,9 @@ genomeAndLengthPair genomes::calcUniqueBlocksAlongTree(tree::nodeP t, vector<Gen
  (in bifurcating nodes this is a identical to simply comparing one son to the other (NOTE: might want to check number of sons
 to reduce the need to find closest son as most nodes should be bifurcating)
 comparison between two genomes is done using the previously used compareBlocksGenomes method*/
+
+// Note: One of the reviewer complained about a bias in choosing representatives for inner nodes and wish for it to be random. a new version should be implemented 24.2.22 AM
+
 	if (t->isLeaf()) {
 		// nothing to do. just return genome and its distance to the parent
 		genomeAndLengthPair returnVal(&(*genomeIt), t->dis2father()); //somewhat weird way to change iterator to pointer
@@ -445,7 +448,7 @@ comparison between two genomes is done using the previously used compareBlocksGe
 	for (size_t i = 0; i < sonsVector.size(); i++)
 	{
 		if (i == closestSon)
-			continue; // We compare all sons to the closest. no need to compare it to itself
+			continue; // We compare all sons to the closest. No need to compare it to itself
 		compareBlocksGenomes(*(sonsVector[closestSon]), *(sonsVector[i]));
 	}
 	return son2return;

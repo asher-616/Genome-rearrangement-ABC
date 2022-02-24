@@ -121,8 +121,8 @@ class CMakeBuild(build_ext):
 # The information here can also be placed in setup.cfg - better separation of
 # logic and declaration, and simpler if you include description/version in a file.
 try:
-    shutil.rmtree("/home/elyawy/Developement/Msc/projects/Genome-rearrangement-ABC-new/build")
-    shutil.rmtree("/home/elyawy/Developement/Msc/projects/Genome-rearrangement-ABC-new/GenomeRearrangement.egg-info")
+    shutil.rmtree(r"C:\Users\LENOVO\Documents\GitHub\Genome-rearrangement-ABC-new\build")
+    shutil.rmtree(r"C:\Users\LENOVO\Documents\GitHub\Genome-rearrangement-ABC-new\GenomeRearrangement.egg-info")
 except OSError as e:
     print("Error: %s - %s." % (e.filename, e.strerror))
 
