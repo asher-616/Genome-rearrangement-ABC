@@ -34,21 +34,16 @@ private:
 	vector<GenomeClass> genomesVect;
 	double _avgMaxBlock;
 	const size_t _minUniqueBlockSize = 1; //min size for unique blocks we care about
-	const size_t _maxUniqueBlockSize = 40; //same but max
-	size_t _minUniqueRevBlockSize =1; //min size for unique reversed blocks we care about
-	size_t _maxUniqueRevBlockSize = 40; //same but max
-	size_t _minUniqueProbRevBlockSize; //min size for unique reversed blocks we care about
-	size_t _maxUniqueProbRevBlockSize; //same but max
-	//Trie uniqueBlocksTree; //needs to be initialized
-	//Trie uniqueRevBlocksTree; //needs to be initialized
-	//Trie uniqueProbRevBlocksTree;//needs to be initialized
+	const size_t _maxUniqueBlockSize = 10; //same but max
+	const size_t _minUniqueRevBlockSize = 1; //min size for unique reversed blocks we care about
+	const size_t _maxUniqueRevBlockSize = 10; //same but max
 	
 	size_t minChromosomes = 100000; //initiate with extremly big number
 	size_t maxChromosomes = 0; //initiate with zero
 	vector<int> all_chromosomes_vect;
 	double averageChromosomes;
 	double varCromosomes = 0;
-	//@@@ changing to hash 
+	//@@@ changing to hash
 	map< vector<int>, int> uniqueBlocksMap;
 	map< vector<int>, int> uniqueRevBlocksMap;
 	vector<int>	uniqueBlocksVec;

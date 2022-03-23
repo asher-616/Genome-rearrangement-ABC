@@ -4,6 +4,14 @@ import subprocess
 import sys
 import shutil
 
+try:
+    shutil.rmtree("/home/elyawy/Development/Msc/projects/Genome-rearrangement-ABC-new/build")
+    shutil.rmtree("/home/elyawy/Development/Msc/projects/Genome-rearrangement-ABC-new/GenomeRearrangement.egg-info")
+except OSError as e:
+    print("Error: %s - %s." % (e.filename, e.strerror))
+
+
+
 from setuptools import Extension, setup
 from setuptools.command.build_ext import build_ext
 
@@ -120,16 +128,11 @@ class CMakeBuild(build_ext):
 
 # The information here can also be placed in setup.cfg - better separation of
 # logic and declaration, and simpler if you include description/version in a file.
-try:
-    shutil.rmtree(r"C:\Users\LENOVO\Documents\GitHub\Genome-rearrangement-ABC-new\build")
-    shutil.rmtree(r"C:\Users\LENOVO\Documents\GitHub\Genome-rearrangement-ABC-new\GenomeRearrangement.egg-info")
-except OSError as e:
-    print("Error: %s - %s." % (e.filename, e.strerror))
 
 setup(
     name="GenomeRearrangement",
-    version="0.0.1",
-    author="Asher Moshe",
+    version="0.0.2",
+    author="Asher Moshe & Elya Wygoda",
     author_email="asher616@gmail.com",
     description="A test project using pybind11 and CMake",
     long_description="",

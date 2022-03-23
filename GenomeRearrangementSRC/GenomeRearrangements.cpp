@@ -5,7 +5,7 @@ int inv_counter, trans_counter, fis_counter, fus_counter;
 
 void drawRandomLocationOld(vector<int> & location, const vector<vector<int> > & genome, const int genomelength) {
 	//receives a genome (and length) and returns a randomly chosen (uniform distribution) gene location (vector of chromosome number and gene number)
-	unsigned int GeneNum = uniform(0,genomelength); //need to draw a random number in range (1-genomelength)
+	unsigned int GeneNum = RandomGenerators::uniform(0,genomelength); //need to draw a random number in range (1-genomelength)
 	unsigned int chromosome = 0;
 	location.clear();
 	while (GeneNum > genome[chromosome].size())
@@ -15,7 +15,7 @@ void drawRandomLocationOld(vector<int> & location, const vector<vector<int> > & 
 	}
 	if (chromosome < genome.size() - 1 && GeneNum == genome[chromosome].size())
 	{
-		double someUniformRandomNum = uniform(); //random in range [0,1]
+		double someUniformRandomNum = RandomGenerators::uniform(); //random in range [0,1]
 		if (someUniformRandomNum < 0.5)
 		{
 			chromosome++;
@@ -34,7 +34,7 @@ void drawRandomLocationOld(vector<int> & location, const vector<vector<int> > & 
 	 // draw event direction - if location is one of the genome ends, direction is determined inwards (only available choice)
 	 // otherwise direction is determined randomly with 1:1 ratio
 	 // output: true if direction is forward, false if direction is backwards (direction is relevant for inversion and transposition only)
-	 unsigned int GeneNum = uniform(0, genomelength - 1); //need to draw a random number in range (0-genomelength-1)
+	 unsigned int GeneNum = RandomGenerators::uniform(0, genomelength - 1); //need to draw a random number in range (0-genomelength-1)
 	 unsigned int chromosome = 0;
 	 location.clear();
 	 if (GeneNum == 0) //first gene in first chromosome
@@ -55,7 +55,7 @@ void drawRandomLocationOld(vector<int> & location, const vector<vector<int> > & 
 		 GeneNum -= genome[chromosome].size();
 		 chromosome++;
 	 }
-	 bool forward = uniform() > 0.5;
+	 bool forward = RandomGenerators::uniform() > 0.5;
 	 if ((GeneNum == genome[chromosome].size()))
 	 {
 		 GeneNum = 0;
@@ -84,7 +84,7 @@ void SimulateEvent(vector<vector<int> > & genome, int genomeLength, double trans
 			exit(0);
 		}
 	}
-	double someUniformRandomNum = uniform(); //random in range [0,1] 
+	double someUniformRandomNum = RandomGenerators::uniform(); //random in range [0,1] 
 	vector<int> location;
 	/* //old code for location drawing (pre-Itsik). no direction was drawn (location was starting point)
 	do
@@ -150,7 +150,6 @@ void SimulateEvent(vector<vector<int> > & genome, int genomeLength, double trans
 		if (!forward)
 			location[1] -= (blockSize - 1) ; //change location to event start point. the -1 explained in the transposition event
 		inv_counter++;
-		std::cout << "inv_counter: " << inv_counter << "\n";
 
 		Inversion(genome, location, blockSize);
 		//cout << "inversion " << location[0] << " " << location[1] << endl;
@@ -181,11 +180,11 @@ void SimulateEvent(vector<vector<int> > & genome, int genomeLength, double trans
 	else if (someUniformRandomNum < (inversionRate + transpositionRate + fusionRate) / totalRates)
 	{
 		//do fusion
-		int chromosome1 = uniform(0, genome.size()-1);
+		int chromosome1 = RandomGenerators::uniform(0, genome.size()-1);
 		int chromosome2;
 		do
 		{
-			chromosome2 = uniform(0, genome.size()-1);
+			chromosome2 = RandomGenerators::uniform(0, genome.size()-1);
 		} while (chromosome1 == chromosome2);
 		//cout << "fusion " << chromosome1 << "+ " << chromosome2 << endl;
 		fus_counter++;
@@ -238,7 +237,7 @@ void Inversion(vector<vector<int> > & genome, vector<int> & eventLocation, int e
 
 void Transposition(vector<vector<int> > & genome, vector<int> eventStartPoint, int eventSize, vector<int> eventdestination){
 	//takes a block (of eventSize genes beginning at eventStartPoint and moves it to eventDestination
-	double someUniformRandomNum = uniform(); //random in range [0,1] 
+	double someUniformRandomNum = RandomGenerators::uniform(); //random in range [0,1] 
 	//cout << "transposition" << endl;
 	if (someUniformRandomNum < 0.5) // used to allow block to be reinserted in both orientations (1:1 ratio).
 	{
@@ -271,7 +270,7 @@ void Fusion(vector<vector<int>>& genome, int chromosome1, int chromosome2)
 {
 	//get a genome and two (different) chromosome numbers and merge them into one by choosing what orientation the second is attached to the first
 	//cout << "fusion" << endl;
-	double someUniformRandomNum = uniform(); //random in range [0,1] 
+	double someUniformRandomNum = RandomGenerators::uniform(); //random in range [0,1] 
 	if (someUniformRandomNum < 0.5) // used to allow block to be reinserted in both orientations (1:1 ratio).
 	{
 		reverse(genome[chromosome2].begin(), genome[chromosome2].end());
@@ -280,7 +279,7 @@ void Fusion(vector<vector<int>>& genome, int chromosome1, int chromosome2)
 			genome[chromosome2][i] *= -1;
 		}
 	}
-	someUniformRandomNum = uniform(); //random in range [0,1] 
+	someUniformRandomNum = RandomGenerators::uniform(); //random in range [0,1] 
 	if (someUniformRandomNum < 0.5) // used to allow block to be reinserted in both orientations (1:1 ratio).
 	{
 		reverse(genome[chromosome1].begin(), genome[chromosome1].end());
@@ -320,7 +319,7 @@ void GeneDuplication(vector<vector<int>>& genome, vector<int> eventStartPoint, v
 {
 	vector<int>::iterator it = genome[eventdestination[0]].begin();
 	int gene = genome[eventStartPoint[0]][eventStartPoint[1]];
-	double someUniformRandomNum = uniform(); //random in range [0,1] 
+	double someUniformRandomNum = RandomGenerators::uniform(); //random in range [0,1] 
 	if (someUniformRandomNum < 0.5)
 	{
 		gene *= -1;
@@ -367,7 +366,7 @@ int main() {
 		vector<int> tempChromosome;
 		for (int i = 0; i < numOfGenes; i++)
 		{
-			double orient = uniform();
+			double orient = RandomGenerators::uniform();
 			if (orient < 0.5)
 				tempChromosome.push_back(GeneNum*(-1));
 			else

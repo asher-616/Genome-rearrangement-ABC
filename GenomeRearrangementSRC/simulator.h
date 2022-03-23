@@ -23,9 +23,10 @@ class Simulator {
 			_DR(DuplicationRate), _LR(LossRate), zip(AParam, Re_params::_maxBlock), rootZip(randRootAparam, Re_params::_rootMaxFamilySize), _t(t) {};*/
 		Simulator(const string& treePath);
 		
-		void initSim(vector<int> ChromosomeLength, double AParam, double InvertRate, double TranslocateRatio, double FusionRate,
+		void initSim(vector<int> ChromosomeLength, double AParam, size_t maxBlockSize, double InvertRate, double TranslocateRatio, double FusionRate,
 			double FissionRate, double DuplicationRate, double LossRate, double randRootAparam);
 
+		void setSeed(int seedNum);
 
 
 		vector<genomeType> simulateBasedOnTree();
@@ -69,15 +70,3 @@ class Simulator {
 
 
 };
-// The simulator simulates sequences along a tree without substitutions
-// The output is a list of strings, each corresponding to a single sequence
-// The name of each sequence is not given in this output.
-// For example, if we simulate along the tree ((s1:0.3; s2: 0.4), s3:0.5);
-// We will get as output a vector of string, say, V, so that:
-// v[0] = "ACGAAG-"
-// v[1] = "A---AG-"
-// v[2] = "-CGAAGA"
-// In truth, we do not simulate substitutions, so that vectors will actually look like:
-// v[0] = "AAAAAA-"
-// v[1] = "A---AA-"
-// v[2] = "-AAAAAA"

@@ -15,14 +15,18 @@ void genomes::init(const vector<genomeType> & genomeVect) {
 		GenomeClass tempGenome(*it);
 		genomesVect.push_back(tempGenome);
 	}
-	//calcSumStatAllVSAll(); // old version
-	calcSumStatBrothersOnly(); // new version
+	uniqueBlocksVec = vector<int>(_maxUniqueBlockSize - _minUniqueBlockSize +1, 0);
+	uniqueRevBlocksVec = vector<int>(_maxUniqueRevBlockSize - _minUniqueRevBlockSize +1, 0);
+
+	calcSumStatAllVSAll(); // old version
+	// calcSumStatBrothersOnly(); // new version
 	
 }
 
 genomes::genomes(const vector<genomeType> &genomeVect, tree sim_tree){
 	//A.M here I receive a vector of genomestype objects and create a 'genomes' class object by creating a 'genomeClass' object from
 	//each genometype object
+
 	_t = sim_tree;
 	init(genomeVect);
 }
@@ -117,8 +121,6 @@ vector<vector<double> > genomes::get_summary_stats_vector() {
 	sumStat.push_back(uniqueRevBlocksVecdouble);
 	//sumStat.push_back(importantStats);
 	sumStat.push_back(importantStats);
-	cout << "min\tmax\tavg" << endl; // for testing
-	cout << minChromosomes << "\t" << maxChromosomes << "\t" << averageChromosomes << endl; // for testing
 	return sumStat;
 }
 
@@ -246,7 +248,7 @@ vector<int> genomes::compareBlocksGenomes(GenomeClass& genome1, GenomeClass& gen
 		{
 			//cout << j << ' '; //for testing
 			blockseq.push_back(genome1.genome[i][j]);
-			if (j + 1 == chromosomeSize)  //reached end of chromosome
+			if (j + 1 == chromosomeSize)//reached end of chromosome
 			{
 				blocksVec.push_back(block); 
 
@@ -374,13 +376,13 @@ void genomes::updateHashAndVector(vector<int>& seq, vector<int>& blockVec, map<v
 		return;
 	}
 	hashMap[seq] = 1;
-	if (blockVec.size() < seq.size())
-	{
-		for (size_t i = blockVec.size(); i < seq.size(); i++)
-		{
-			blockVec.push_back(0);
-		}
-	}
+	// if (blockVec.size() < seq.size())
+	// {
+	// 	for (size_t i = blockVec.size(); i < seq.size(); i++)
+	// 	{
+	// 		blockVec.push_back(0);
+	// 	}
+	// }
 	blockVec[seq.size() - 1]++;
 }
 
@@ -404,9 +406,6 @@ genomeAndLengthPair genomes::calcUniqueBlocksAlongTree(tree::nodeP t, vector<Gen
  (in bifurcating nodes this is a identical to simply comparing one son to the other (NOTE: might want to check number of sons
 to reduce the need to find closest son as most nodes should be bifurcating)
 comparison between two genomes is done using the previously used compareBlocksGenomes method*/
-
-// Note: One of the reviewer complained about a bias in choosing representatives for inner nodes and wish for it to be random. a new version should be implemented 24.2.22 AM
-
 	if (t->isLeaf()) {
 		// nothing to do. just return genome and its distance to the parent
 		genomeAndLengthPair returnVal(&(*genomeIt), t->dis2father()); //somewhat weird way to change iterator to pointer
@@ -448,7 +447,7 @@ comparison between two genomes is done using the previously used compareBlocksGe
 	for (size_t i = 0; i < sonsVector.size(); i++)
 	{
 		if (i == closestSon)
-			continue; // We compare all sons to the closest. No need to compare it to itself
+			continue; // We compare all sons to the closest. no need to compare it to itself
 		compareBlocksGenomes(*(sonsVector[closestSon]), *(sonsVector[i]));
 	}
 	return son2return;

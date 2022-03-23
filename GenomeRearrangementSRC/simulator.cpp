@@ -3,11 +3,6 @@
 
 using namespace std;
 
-const int MaxIndelSize = 50; // maximum length of insertion or deletion
-//int currIdToInsert; //A.M used in SpartaABC for continuity of inserstion IDs may want something similar when adding duplication/loss models
-vector<nucID> superSequence;
-int tmparray[MaxIndelSize];
-
 /*
 explicit Simulator(vector<int> ChromosomeLength, double AParam, double InvertRate, double TranslocateRatio, double FusionRate,
 	double FissionRate, double DuplicationRate, double LossRate, double randRootAparam, tree & t) :
@@ -16,8 +11,10 @@ explicit Simulator(vector<int> ChromosomeLength, double AParam, double InvertRat
 	*/
 Simulator::Simulator(const string& treePath) : _t(treePath) {};
 
-void Simulator::initSim(vector<int> ChromosomeLength, double AParam, double InvertRate, double TranslocateRatio, double FusionRate,
-	double FissionRate, double DuplicationRate, double LossRate, double randRootAparam) {
+void Simulator::initSim(vector<int> ChromosomeLength, double AParam, size_t maxBlockSize,
+	double InvertRate, double TranslocateRatio, double FusionRate,
+	double FissionRate, double DuplicationRate, double LossRate, double randRootAparam
+	) {
 	_rootChromosomes = ChromosomeLength;
 	_A_param = AParam;
 	_InvR = InvertRate;
@@ -26,9 +23,16 @@ void Simulator::initSim(vector<int> ChromosomeLength, double AParam, double Inve
 	_FiR = FissionRate;
 	_DR = DuplicationRate;
 	_LR = LossRate;
-	zip = FastZip(AParam, 50); 
-	rootZip = FastZip(randRootAparam, 50);
+	zip = FastZip(AParam, maxBlockSize); 
+	rootZip = FastZip(randRootAparam, maxBlockSize);
+	RandomGenerators::initRandomGenerator(-1);
+
 }
+
+void Simulator::setSeed(int seedNum){
+	RandomGenerators::initRandomGenerator(seedNum);
+}
+
 
 tree Simulator::getSimTree() {
 	return _t;
@@ -100,7 +104,7 @@ genomeType Simulator::generateRootGenome() {
 		vector<int> tempChromosome;
 		for (int j = 0; j < _rootChromosomes[i]; j++)
 		{
-			double orient = uniform();
+			double orient = RandomGenerators::uniform();
 			if (orient < 0.5)
 				tempChromosome.push_back(GeneNum*(-1));
 			else
@@ -122,7 +126,7 @@ genomeType Simulator::generateRootGenome() {
 			int pos = loc[1];
 			vector<int>::iterator it = genome[chr].begin();
 			int gene = i;
-			double orient = uniform();
+			double orient = RandomGenerators::uniform();
 			if (orient < 0.5)
 				gene*= -1;
 			genome[chr].insert(it + pos, gene);
@@ -164,7 +168,7 @@ void Simulator::simualteEventsAlongAspecificBranch_rec(const genomeType& ancestr
 	double lossRateOverall = 1.0 * _DR * genomeLength;
 	double totalEventRate = sequenceWiseInvertionRate + sequenceWiseTranspositionRate + fusionRateOverall + fissionRateOverall + duplicationRateOverall + lossRateOverall;
 
-	double waitingTime = drawExp(totalEventRate);
+	double waitingTime = RandomGenerators::drawExp(totalEventRate);
 	if (waitingTime > branchLength)
 		return;
 	// generate one events, i.e., an insertion or a deletion
@@ -206,7 +210,7 @@ void Simulator::simualteEventsAlongAspecificBranch(const genomeType& ancestralGe
 		double duplicationRateOverall = 1.0 * _DR * genomeLength;
 		double lossRateOverall = 1.0 * _DR * genomeLength;
 		double totalEventRate = sequenceWiseInvertionRate + sequenceWiseTranspositionRate + fusionRateOverall + fissionRateOverall + duplicationRateOverall + lossRateOverall;
-		double waitingTime = drawExp(totalEventRate);
+		double waitingTime = RandomGenerators::drawExp(totalEventRate);
 		if (waitingTime > branchLength)
 			break;
 		branchLength -= waitingTime;
@@ -217,7 +221,6 @@ void Simulator::simualteEventsAlongAspecificBranch(const genomeType& ancestralGe
 
 
 	} while (true);
-	cout << inv_counter << "\n";
 	inv_counter_vec.push_back(inv_counter);
 	trans_counter_vec.push_back(trans_counter);
 	fis_counter_vec.push_back(fis_counter);

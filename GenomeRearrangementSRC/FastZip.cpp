@@ -91,8 +91,8 @@ FastZip::FastZip(double aParam, int max)
 }
 
 int FastZip::drawZip() {
-	int bin = uniform(0, numBins - 1);
-	double randomNum = uniform();
+	int bin = RandomGenerators::uniform(0, numBins - 1);
+	double randomNum = RandomGenerators::uniform();
 	if (randomNum < lowHighRateVector[bin])
 		return lowVector[bin];
 	else

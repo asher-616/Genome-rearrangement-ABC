@@ -1043,7 +1043,7 @@ int giveRandomState(const int alphabetSize, const int beginningState, const VVdo
 	//A.M. weird algorithm
 	for (int loop = 0 ; loop < 100000 ; ++loop) 
 	{
-		MDOUBLE theRandNum = uniform();  // was talRandom::giveRandomNumberBetweenZeroAndEntry(1.0);
+		MDOUBLE theRandNum = RandomGenerators::uniform();  // was talRandom::giveRandomNumberBetweenZeroAndEntry(1.0);
 		MDOUBLE sum = 0.0;
 		for (int state = 0; state < alphabetSize; ++state) 
 		{
@@ -1060,7 +1060,7 @@ int giveRandomState(const int alphabetSize, const int beginningState, const VVdo
 
 int giveRandomState(const int alphabetSize, const Vdouble &frequencies)  {
 	for (int loop =0 ;loop<100000 ;loop++) {
-		MDOUBLE theRandNum = uniform()*0.999; // was talRandom::giveRandomNumberBetweenZeroAndEntry(0.999);
+		MDOUBLE theRandNum = RandomGenerators::uniform()*0.999; // was talRandom::giveRandomNumberBetweenZeroAndEntry(0.999);
 		MDOUBLE sum = 0.0;
 		for (int j=0; j < alphabetSize;++j) {
 			sum+=frequencies[j];
