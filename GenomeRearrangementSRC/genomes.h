@@ -33,10 +33,11 @@ private:
 	void init(const vector<genomeType>&);//used in constructors so that both constructors will share the same code
 	vector<GenomeClass> genomesVect;
 	double _avgMaxBlock;
+	// define max and min blocks size, both normal and reversed.
 	const size_t _minUniqueBlockSize = 1; //min size for unique blocks we care about
 	const size_t _maxUniqueBlockSize = 10; //same but max
-	const size_t _minUniqueRevBlockSize = 1; //min size for unique reversed blocks we care about
-	const size_t _maxUniqueRevBlockSize = 10; //same but max
+	// const size_t _minUniqueRevBlockSize = 1; //min size for unique reversed blocks we care about
+	// const size_t _maxUniqueRevBlockSize = 100; //same but max
 	
 	size_t minChromosomes = 100000; //initiate with extremly big number
 	size_t maxChromosomes = 0; //initiate with zero

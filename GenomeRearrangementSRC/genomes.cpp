@@ -15,8 +15,10 @@ void genomes::init(const vector<genomeType> & genomeVect) {
 		GenomeClass tempGenome(*it);
 		genomesVect.push_back(tempGenome);
 	}
-	uniqueBlocksVec = vector<int>(_maxUniqueBlockSize - _minUniqueBlockSize +1, 0);
-	uniqueRevBlocksVec = vector<int>(_maxUniqueRevBlockSize - _minUniqueRevBlockSize +1, 0);
+	// size of unique blocks vector is determined by the number of interesting bins
+	// and a last bin to aggregate the rest of the blocks.
+	uniqueBlocksVec = vector<int>(_maxUniqueBlockSize - _minUniqueBlockSize + 2, 0);
+	uniqueRevBlocksVec = vector<int>(_maxUniqueBlockSize - _minUniqueBlockSize + 2, 0);
 
 	calcSumStatAllVSAll(); // old version
 	// calcSumStatBrothersOnly(); // new version
@@ -354,16 +356,16 @@ void genomes::reverseSubSeq(vector<int> & seq) {
 
 //@@@@@changing to hash instead of trees@@@@@@@
 void genomes::updateUniqueBlocksHash(vector<int> &seq) {
-	if (seq.size() < _minUniqueBlockSize || seq.size() > _maxUniqueBlockSize)
-		return;
+	// if (seq.size() < _minUniqueBlockSize || seq.size() > _maxUniqueBlockSize)
+	// 	return;
 	if (abs(seq[0]) > abs(seq.back()))
 		reverseSubSeq(seq);
 	updateHashAndVector(seq, uniqueBlocksVec, uniqueBlocksMap);
 }
 
 void genomes::updateUniqueRevBlocksHash(vector<int> &seq) {
-	if (seq.size() < _minUniqueBlockSize || seq.size() > _maxUniqueBlockSize)
-		return;
+	// if (seq.size() < _minUniqueBlockSize || seq.size() > _maxUniqueBlockSize)
+	// 	return;
 	if (abs(seq[0]) > abs(seq.back()))
 		reverseSubSeq(seq);
 	updateHashAndVector(seq, uniqueRevBlocksVec, uniqueRevBlocksMap);
@@ -376,14 +378,13 @@ void genomes::updateHashAndVector(vector<int>& seq, vector<int>& blockVec, map<v
 		return;
 	}
 	hashMap[seq] = 1;
-	// if (blockVec.size() < seq.size())
-	// {
-	// 	for (size_t i = blockVec.size(); i < seq.size(); i++)
-	// 	{
-	// 		blockVec.push_back(0);
-	// 	}
-	// }
-	blockVec[seq.size() - 1]++;
+
+	if (seq.size() >= _minUniqueBlockSize && seq.size() <= _maxUniqueBlockSize)
+	{
+		blockVec[seq.size() - 1]++;
+		return;
+	}
+	blockVec[blockVec.size() - 1]++;	
 }
 
 resultType genomes::calcFisFusBasedOnTree() {
