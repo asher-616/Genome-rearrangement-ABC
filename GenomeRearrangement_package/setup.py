@@ -2,14 +2,6 @@ import os
 import re
 import subprocess
 import sys
-import shutil
-
-try:
-    shutil.rmtree("/home/elyawy/Development/Msc/projects/Genome-rearrangement-ABC-new/build")
-    shutil.rmtree("/home/elyawy/Development/Msc/projects/Genome-rearrangement-ABC-new/GenomeRearrangement.egg-info")
-except OSError as e:
-    print("Error: %s - %s." % (e.filename, e.strerror))
-
 
 
 from setuptools import Extension, setup
