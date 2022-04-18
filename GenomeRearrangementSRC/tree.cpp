@@ -413,6 +413,17 @@ void tree::getAllLeaves(vector<nodeP> &vec, const nodeP fromHereDown ) const {
 	getAllLeavesPrivate(vec,fromHereDown);
 }
 
+vector<string> tree::getLeavesVector(){
+	vector<nodeP> tempvec;
+	vector<string> resvec;
+	getAllLeaves(tempvec, this->getRoot());
+	for (auto & element : tempvec)
+	{
+		resvec.push_back(element->name());
+	}
+	return resvec;
+}
+
 
 void tree::getAllLeavesPrivate(vector<nodeP> &vec, const nodeP fromHereDown ) const {
 	if (fromHereDown == NULL) return;

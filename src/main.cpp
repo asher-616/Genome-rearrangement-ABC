@@ -34,5 +34,7 @@ PYBIND11_MODULE(GenomeRearrangement, m) {
         .def("get_sum_stats", &genomes::get_summary_stats_vector);
 
     py::class_<tree>(m, "tree")
-        .def(py::init<>());
+        .def(py::init<std::string>())
+        .def(py::init<>())
+        .def("get_leaves",&tree::getLeavesVector);
 }

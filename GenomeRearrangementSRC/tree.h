@@ -132,6 +132,7 @@ public:
 	void getAllNodes(vector<nodeP> &vec,const nodeP fromHereDown) const ;
 	void getAllLeaves(vector<nodeP> &vec,const nodeP fromHereDown) const;
 
+	vector<string> getLeavesVector();
 //*******************************************************************************
 // change tree topoplogy parameters - should be applied carefully
 //*******************************************************************************
