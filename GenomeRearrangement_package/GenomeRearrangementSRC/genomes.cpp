@@ -43,7 +43,6 @@ genomes::genomes(string inputFile, string treeFile) {
 
 	while (getline(file, line))
 	{
-		cout << line << endl;
 		if (line.empty())
 		{
 			continue; //ignoring empty lines

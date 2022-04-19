@@ -123,10 +123,10 @@ class CMakeBuild(build_ext):
 
 setup(
     name="GenomeRearrangement",
-    version="0.0.2",
+    version="0.0.3",
     author="Asher Moshe & Elya Wygoda",
     author_email="asher616@gmail.com",
-    description="A test project using pybind11 and CMake",
+    description="A Genome rearrangement simulator",
     long_description="",
     ext_modules=[CMakeExtension("GenomeRearrangement")],
     cmdclass={"build_ext": CMakeBuild},
