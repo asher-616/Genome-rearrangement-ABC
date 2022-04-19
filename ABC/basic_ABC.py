@@ -95,15 +95,15 @@ def extract_m0_params(params_set):
 
 
 def extract_m0_params_no_a(params_set):
-    return params_set[1][2:4]
+    return params_set[3:5]
 
 
 def extract_a_param(params_set):
-    return [params_set[1][0]]
+    return params_set[1]
 
 
 def extract_m1_params(params_set):
-    return [len(params_set[0])] + params_set[1][4:6]
+    return [len(params_set[0])] + params_set[5:7]
 
 
 def compute_distance(vec1, vec2, weight_vec):
@@ -196,4 +196,3 @@ if __name__ == "__main__":
     prior_conf = config_reader.parse_conf(args.config)
     np.random.seed(int(prior_conf['seed']()))
     retained_dic = run_abc(empiric_ss, prior_conf, args.tree, args.output)
-    print(retained_dic)
