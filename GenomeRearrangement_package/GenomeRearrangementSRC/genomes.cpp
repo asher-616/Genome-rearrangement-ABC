@@ -618,3 +618,29 @@ genomes::~genomes()
 {
 	//destructor
 }
+
+void genomes::saveGenomeToFile(string filePath){
+	int i = 1;
+	ofstream out_file;
+	out_file.open(filePath, std::ios_base::out);
+	vector<GenomeClass>::iterator iter1 = this->genomesVect.begin();
+	
+	for (iter1; iter1 < this->genomesVect.end(); iter1++)
+	{
+		out_file << ">genome" << i << '\n';
+		i++;
+		vector<chromosomeType>::iterator iter2 = (*iter1).genome.begin();
+		int j = 1;
+		for (iter2; iter2 < (*iter1).genome.end(); iter2++){
+			out_file << "chr" << j; 
+			j++;
+			vector<int>::iterator iter3 = (*iter2).begin();
+			for (iter3; iter3 < (*iter2).end(); iter3++){
+				out_file << '\t' << *iter3;
+			}
+			out_file << '\n';
+		}
+	}
+	return;
+	
+}
