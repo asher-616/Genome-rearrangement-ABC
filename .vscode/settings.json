@@ -62,7 +62,8 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "valarray": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "xstring": "cpp"
     },
     "python.pythonPath": "/home/elyawy/envs/buildenv/bin/python"
 }

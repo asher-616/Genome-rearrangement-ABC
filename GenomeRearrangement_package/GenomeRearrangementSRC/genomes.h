@@ -11,6 +11,7 @@
 #include <assert.h>
 #include  <math.h>
 
+
 using namespace std;
 
 typedef pair< pair< set <chromosomeTipType>, set <minimizedChromosomeType> >, pair<set <chromosomeTipType>, int>> resultType;
@@ -28,6 +29,7 @@ public:
 
 	vector<int> compareBlocksGenomes(GenomeClass & genome1, GenomeClass & genome2); //why is it here? A.M
 	vector<vector<double> > get_summary_stats_vector(); //get summary statistic as a vector
+	void saveGenomeToFile(string filePath);
 
 private:
 	void init(const vector<genomeType>&);//used in constructors so that both constructors will share the same code
